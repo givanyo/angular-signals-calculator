@@ -7,6 +7,7 @@ export class CalculatorService {
   private displayValue = signal('0');
   private memory = signal<string | null>(null);
   private operator = signal<string | null>(null);
+  private waitingNext = signal(false);
   private displayToMemory() {
     this.memory.set(this.displayValue());
   }
@@ -40,8 +41,9 @@ export class CalculatorService {
     return this.displayValue() === '0' || this.displayValue() === 'Erro';
   }
   addDigit(keyValue: string) {
-    if (this.displayIsNull) {
+    if (this.displayIsNull || this.waitingNext()) {
       this.displayValue.set(keyValue);
+      this.waitingNext.set(false);
       return;
     }
     const newDisplayValue = computed(() => this.displayValue() + keyValue);
@@ -53,6 +55,7 @@ export class CalculatorService {
     }
     this.operator.set(keyValue);
     this.displayToMemory();
+    this.waitingNext.set(true);
   }
 
   backspace() {
