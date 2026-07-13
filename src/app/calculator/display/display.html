@@ -1,7 +1,7 @@
 <div class="display">
     <div class="memory-and-operator">
-        <p> {{ memory() }}</p>
+        <p> {{ memory() | number: '1.0-8' : 'pt-BR' }}</p>
         <p> {{ operator() }}</p>
     </div>
-    <p>{{ displayValue() }}</p>
+    <p>{{ displayValue() | number: '1.0-8' : 'pt-BR' }}</p>
 </div>
