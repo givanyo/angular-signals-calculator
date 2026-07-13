@@ -1,5 +1,8 @@
 import { Injectable, signal, computed } from '@angular/core';
-
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+import { formatNumber } from '@angular/common';
+registerLocaleData(localePt);
 @Injectable({
   providedIn: 'root',
 })
@@ -8,6 +11,10 @@ export class CalculatorService {
   private memory = signal<string | null>(null);
   private operator = signal<string | null>(null);
   private displayToMemory() {
+    if (this.displayValue().at(-1) === ',') {
+      this.memory.set(this.displayValue().slice(0, -1));
+      return;
+    }
     this.memory.set(this.displayValue());
   }
 
@@ -31,14 +38,14 @@ export class CalculatorService {
         result = String(memory / displayNumber);
         break;
     }
-    
-    if(result === 'NaN') {
+
+    if (result === 'NaN') {
       result = 'Erro';
-    } 
+    }
 
     this.memory.set(null);
     this.operator.set(null);
-    this.displayValue.set(result);
+    this.displayValue.set(result.replace('.', ','));
   }
 
   get displayIsNull() {
@@ -83,16 +90,27 @@ export class CalculatorService {
   clearEntry() {
     this.displayValue.set('0');
   }
+
   handleEqual() {
     if (this.memory() === null || this.operator() === null) {
       return;
     }
-    const memory = Number(this.memory());
-    const display = Number(this.displayValue());
+    const memory = Number(this.memory()?.replace(',', '.'));
+    const display = Number(this.displayValue().replace(',', '.'));
     const operator = this.operator();
 
     this.calculate(display, operator!, memory);
   }
+
+  handleDecimal() {
+    const displayValueChars = [...this.displayValue()];
+    if (displayValueChars.includes(',') || this.displayValue() === 'Erro') {
+      return;
+    }
+    const newDisplayValue = computed(() => this.displayValue() + ',');
+    this.displayValue.set(newDisplayValue());
+  }
+
   getDisplayValue() {
     return this.displayValue;
   }
