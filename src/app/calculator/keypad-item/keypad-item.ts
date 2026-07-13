@@ -21,10 +21,12 @@ export class KeypadItem {
   onKeyPress() {
     if (Number(this.keyValue()) || this.keyValue() === '0') {
       this.calculatorService.addDigit(this.keyValue());
+      return;
     }
 
-    if(this.keyStyle == "operator") {
+    if(this.keyValue() !== '=' && this.keyStyle == "operator") {
       this.calculatorService.setOperator(this.keyValue());
+      return;
     }
   }
 }
