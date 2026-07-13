@@ -1,4 +1,5 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { KeyStyleService } from './key-style.service';
 
 @Component({
   selector: 'app-keypad-item',
@@ -7,6 +8,9 @@ import { Component, input } from '@angular/core';
   styleUrl: './keypad-item.css',
 })
 export class KeypadItem {
+  keyStyleService = inject(KeyStyleService);
   keyValue = input.required<string>()
-  keyType = input.required<string | undefined>()
+  get keyStyle() {
+    return this.keyStyleService.getKeyStyle(this.keyValue());
+  }
 }
