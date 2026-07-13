@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Display } from "./display/display";
+import { CalculatorService } from './calculator.service';
 
 @Component({
   selector: 'app-calculator',
@@ -8,5 +9,8 @@ import { Display } from "./display/display";
   styleUrl: './calculator.css',
 })
 export class Calculator {
-
+  calculatorService = inject(CalculatorService);
+  get displayValue() {
+    return this.calculatorService.getDisplayValue();
+  }
 }

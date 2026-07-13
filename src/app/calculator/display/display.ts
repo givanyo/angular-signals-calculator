@@ -7,5 +7,5 @@ import { Component, input } from '@angular/core';
   styleUrl: './display.css',
 })
 export class Display {
-  displayValue = input<number>();
+  displayValue = input<string>();
 }
