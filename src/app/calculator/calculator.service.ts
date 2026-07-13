@@ -55,9 +55,9 @@ export class CalculatorService {
 
   addDigit(keyValue: string) {
     if (this.displayIsNull || this.waitingNext()) {
-      this.waitingNext.set(false)
+      this.waitingNext.set(false);
       this.displayValue.set(keyValue);
-      
+
       return;
     }
     this.waitingNext.set(false);
@@ -67,6 +67,9 @@ export class CalculatorService {
   setOperator(keyValue: string) {
     if (this.displayValue() === 'Erro') {
       return;
+    }
+    if(this.operator() && this.displayValue() !== this.memory()) {
+      this.handleEqual();
     }
     this.operator.set(keyValue);
     this.displayToMemory();
