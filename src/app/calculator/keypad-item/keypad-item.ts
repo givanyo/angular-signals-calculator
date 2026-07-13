@@ -32,5 +32,13 @@ export class KeypadItem {
     if (this.keyValue() === '⌫') {
       this.calculatorService.backspace();
     }
+
+    if(this.keyValue() === 'C') {
+      this.calculatorService.clearAll();
+    }
+
+    if(this.keyValue() === 'CE') {
+      this.calculatorService.clearEntry();
+    }
   }
 }

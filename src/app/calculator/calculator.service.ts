@@ -35,6 +35,17 @@ export class CalculatorService {
     const newDisplayValue = computed(() => this.displayValue().slice(0, -1));
     this.displayValue.set(newDisplayValue());
   }
+
+  clearAll() {
+    this.displayValue.set('0');
+    this.memory.set(null);
+    this.operator.set(null);
+  }
+
+  clearEntry() {
+    this.displayValue.set('0');
+  }
+
   getDisplayValue() {
     return this.displayValue;
   }
