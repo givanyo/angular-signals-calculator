@@ -1,5 +1,5 @@
 <div class="calculator">
-  <app-display [displayValue]="displayValue()"/>
+  <app-display [displayValue]="displayValue()" [memory]="memory()" [operator]="operator()"/>
   <p>Use o mouse/toque ou o teclado: 0-9, +, -, *, /, Enter, Backspace, C</p>
   <div class="keypad">
     <ng-content />

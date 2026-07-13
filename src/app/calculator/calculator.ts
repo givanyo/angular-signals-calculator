@@ -13,4 +13,12 @@ export class Calculator {
   get displayValue() {
     return this.calculatorService.getDisplayValue();
   }
+
+  get memory() {
+    return this.calculatorService.getMemory();
+  }
+
+  get operator() {
+    return this.calculatorService.getOperator();
+  }
 }

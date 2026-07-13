@@ -1,5 +1,7 @@
 .display {
   display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   border-radius: 1rem;
   background: #141414;
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
@@ -9,4 +11,12 @@
   padding-block: 1.25rem;
   justify-content: flex-end;
   align-items: flex-end;
+}
+
+.memory-and-operator {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1rem;
+  font-weight: 300;
+  gap: 0.5rem;
 }

@@ -13,13 +13,13 @@ export class KeypadItem {
   calculatorService = inject(CalculatorService);
 
   keyValue = input.required<string>();
-  
+
   get keyStyle() {
     return this.keypadItemService.getKeyStyle(this.keyValue());
   }
 
   onKeyPress() {
-    if (Number(this.keyValue())) {
+    if (Number(this.keyValue()) || this.keyValue() === '0') {
       this.calculatorService.addDigit(this.keyValue());
     }
   }

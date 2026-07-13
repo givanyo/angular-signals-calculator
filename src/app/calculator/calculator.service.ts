@@ -5,6 +5,8 @@ import { Injectable, signal, computed } from '@angular/core';
 })
 export class CalculatorService {
   private displayValue = signal('0');
+  private memory = signal<string | null>(null);
+  private operator = signal<string | null>(null);
 
   addDigit(keyValue: string) {
     if(this.displayValue() === '0') {
@@ -17,5 +19,13 @@ export class CalculatorService {
 
   getDisplayValue() {
     return this.displayValue;
+  }
+
+  getMemory() {
+    return this.memory;
+  }
+
+  getOperator() {
+    return this.operator;
   }
 }
