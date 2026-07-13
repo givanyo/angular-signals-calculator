@@ -21,6 +21,27 @@ export class KeypadItem {
   onKeyPress() {
     if (Number(this.keyValue()) || this.keyValue() === '0') {
       this.calculatorService.addDigit(this.keyValue());
+      return;
+    }
+    if (this.keyValue() === '=') {
+      this.calculatorService.handleEqual();
+      return;
+    }
+    if (this.keyStyle === 'operator') {
+      this.calculatorService.setOperator(this.keyValue());
+      return;
+    }
+
+    if (this.keyValue() === '⌫') {
+      this.calculatorService.backspace();
+    }
+
+    if (this.keyValue() === 'C') {
+      this.calculatorService.clearAll();
+    }
+
+    if (this.keyValue() === 'CE') {
+      this.calculatorService.clearEntry();
     }
   }
 }
