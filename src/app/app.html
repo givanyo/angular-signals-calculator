@@ -1,1 +1,8 @@
-<app-calculator />
+<main>
+    <app-calculator>
+        @for(keypadItem of keypadItemsMatrix().flat(); track keypadItem) {
+            <app-keypad-item [keyValue]="keypadItem" />
+        }
+    </app-calculator>
+</main>
+
