@@ -1,5 +1,8 @@
 import { Injectable, signal, computed } from '@angular/core';
-
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+import { formatNumber } from '@angular/common';
+registerLocaleData(localePt);
 @Injectable({
   providedIn: 'root',
 })
@@ -9,6 +12,10 @@ export class CalculatorService {
   private operator = signal<string | null>(null);
   private waitingNext = signal(false);
   private displayToMemory() {
+    if (this.displayValue().at(-1) === ',') {
+      this.memory.set(this.displayValue().slice(0, -1));
+      return;
+    }
     this.memory.set(this.displayValue());
   }
 
@@ -32,32 +39,37 @@ export class CalculatorService {
         result = String(memory / displayNumber);
         break;
     }
-    
-    if(result === 'NaN') {
+
+    if (result === 'NaN') {
       result = 'Erro';
-    } 
+    }
 
     this.memory.set(null);
     this.operator.set(null);
-    this.displayValue.set(result);
-    this.waitingNext.set(false);
+    this.displayValue.set(result.replace('.', ','));
   }
 
   get displayIsNull() {
     return this.displayValue() === '0' || this.displayValue() === 'Erro';
   }
+
   addDigit(keyValue: string) {
     if (this.displayIsNull || this.waitingNext()) {
-      this.displayValue.set(keyValue);
       this.waitingNext.set(false);
+      this.displayValue.set(keyValue);
+
       return;
     }
+    this.waitingNext.set(false);
     const newDisplayValue = computed(() => this.displayValue() + keyValue);
     this.displayValue.set(newDisplayValue());
   }
   setOperator(keyValue: string) {
     if (this.displayValue() === 'Erro') {
       return;
+    }
+    if(this.operator() && this.displayValue() !== this.memory()) {
+      this.handleEqual();
     }
     this.operator.set(keyValue);
     this.displayToMemory();
@@ -78,22 +90,32 @@ export class CalculatorService {
     this.displayValue.set('0');
     this.memory.set(null);
     this.operator.set(null);
-    this.waitingNext.set(false);
   }
 
   clearEntry() {
     this.displayValue.set('0');
   }
+
   handleEqual() {
     if (this.memory() === null || this.operator() === null) {
       return;
     }
-    const memory = Number(this.memory());
-    const display = Number(this.displayValue());
+    const memory = Number(this.memory()?.replace(',', '.'));
+    const display = Number(this.displayValue().replace(',', '.'));
     const operator = this.operator();
 
     this.calculate(display, operator!, memory);
   }
+
+  handleDecimal() {
+    const displayValueChars = [...this.displayValue()];
+    if (displayValueChars.includes(',') || this.displayValue() === 'Erro') {
+      return;
+    }
+    const newDisplayValue = computed(() => this.displayValue() + ',');
+    this.displayValue.set(newDisplayValue());
+  }
+
   getDisplayValue() {
     return this.displayValue;
   }

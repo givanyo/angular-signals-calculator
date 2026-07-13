@@ -43,5 +43,10 @@ export class KeypadItem {
     if (this.keyValue() === 'CE') {
       this.calculatorService.clearEntry();
     }
+
+    if(this.keyValue() === ',') {
+      this.calculatorService.handleDecimal();
+      console.log('handle decimal')
+    }
   }
 }

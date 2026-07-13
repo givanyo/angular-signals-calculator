@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Display } from "./display/display";
 import { CalculatorService } from './calculator.service';
 
