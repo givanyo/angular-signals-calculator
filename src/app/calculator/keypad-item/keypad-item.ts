@@ -24,9 +24,13 @@ export class KeypadItem {
       return;
     }
 
-    if(this.keyValue() !== '=' && this.keyStyle == "operator") {
+    if (this.keyValue() !== '=' && this.keyStyle == 'operator') {
       this.calculatorService.setOperator(this.keyValue());
       return;
+    }
+
+    if (this.keyValue() === '⌫') {
+      this.calculatorService.backspace();
     }
   }
 }

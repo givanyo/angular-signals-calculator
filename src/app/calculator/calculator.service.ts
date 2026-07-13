@@ -20,9 +20,20 @@ export class CalculatorService {
   private displayToMemory() {
     this.memory.set(this.displayValue());
   }
+
   setOperator(keyValue: string) {
     this.operator.set(keyValue);
     this.displayToMemory();
+  }
+
+  backspace() {
+    if (this.displayValue() === '0' || this.displayValue().length === 1) {
+      this.displayValue.set('0');
+      return;
+    }
+
+    const newDisplayValue = computed(() => this.displayValue().slice(0, -1));
+    this.displayValue.set(newDisplayValue());
   }
   getDisplayValue() {
     return this.displayValue;
