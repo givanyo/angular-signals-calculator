@@ -32,9 +32,15 @@ export class CalculatorService {
         result = String(memory / displayNumber);
         break;
     }
+    
+    if(result === 'NaN') {
+      result = 'Erro';
+    } 
+
     this.memory.set(null);
     this.operator.set(null);
     this.displayValue.set(result);
+    this.waitingNext.set(false);
   }
 
   get displayIsNull() {
