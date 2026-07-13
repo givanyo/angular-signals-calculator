@@ -23,8 +23,11 @@ export class KeypadItem {
       this.calculatorService.addDigit(this.keyValue());
       return;
     }
-
-    if (this.keyValue() !== '=' && this.keyStyle == 'operator') {
+    if (this.keyValue() === '=') {
+      this.calculatorService.handleEqual();
+      return;
+    }
+    if (this.keyStyle === 'operator') {
       this.calculatorService.setOperator(this.keyValue());
       return;
     }
@@ -33,11 +36,11 @@ export class KeypadItem {
       this.calculatorService.backspace();
     }
 
-    if(this.keyValue() === 'C') {
+    if (this.keyValue() === 'C') {
       this.calculatorService.clearAll();
     }
 
-    if(this.keyValue() === 'CE') {
+    if (this.keyValue() === 'CE') {
       this.calculatorService.clearEntry();
     }
   }
