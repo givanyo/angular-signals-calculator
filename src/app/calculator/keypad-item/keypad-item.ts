@@ -1,5 +1,6 @@
 import { Component, inject, input, output } from '@angular/core';
-import { KeyStyleService } from './key-style.service';
+import { KeypadItemService } from './keypad-item.service';
+import { CalculatorService } from '../calculator.service';
 
 @Component({
   selector: 'app-keypad-item',
@@ -8,14 +9,18 @@ import { KeyStyleService } from './key-style.service';
   styleUrl: './keypad-item.css',
 })
 export class KeypadItem {
-  keyPress = output<string>();
-  keyStyleService = inject(KeyStyleService);
-  keyValue = input.required<string>()
+  keypadItemService = inject(KeypadItemService);
+  calculatorService = inject(CalculatorService);
+
+  keyValue = input.required<string>();
+  
   get keyStyle() {
-    return this.keyStyleService.getKeyStyle(this.keyValue());
+    return this.keypadItemService.getKeyStyle(this.keyValue());
   }
 
   onKeyPress() {
-    this.keyPress.emit(this.keyValue());
+    if (Number(this.keyValue())) {
+      this.calculatorService.addDigit(this.keyValue());
+    }
   }
 }
