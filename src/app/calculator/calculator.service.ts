@@ -78,6 +78,7 @@ export class CalculatorService {
     this.displayValue.set('0');
     this.memory.set(null);
     this.operator.set(null);
+    this.waitingNext.set(false);
   }
 
   clearEntry() {
