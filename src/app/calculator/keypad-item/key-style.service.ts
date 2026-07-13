@@ -9,15 +9,12 @@ export class KeyStyleService {
 
   getKeyStyle(keyValue: string) {
     if (this.operator().includes(keyValue)) {
-      console.log('operator');
       return 'operator';
     }
 
     if (this.darkerBgColor().includes(keyValue)) {
-      console.log('darker')
       return 'darker';
     }
-    console.log('number')
     return 'number';
   }
 }
