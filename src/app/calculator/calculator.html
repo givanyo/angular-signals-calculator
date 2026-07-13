@@ -2,8 +2,6 @@
   <app-display />
   <p>Use o mouse/toque ou o teclado: 0-9, +, -, *, /, Enter, Backspace, C</p>
   <div class="keypad">
-    @for (keypadItem of keypadItemsMatrix().flat(); track keypadItem) {
-      <app-keypad-item [keyValue]="keypadItem" />
-    }
+    <ng-content />
   </div>
 </div>

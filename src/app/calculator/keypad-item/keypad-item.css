@@ -9,6 +9,8 @@
   outline: none;
   border: none;
   font-size: 1.25rem;
+  cursor: pointer;
+  transition: 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .operator {
@@ -21,4 +23,12 @@
 
 .number {
   background-color: hsl(220, 5%, 12%);
+}
+
+.keypad-item:hover {
+  filter: brightness(0.9);
+}
+
+.keypad-item:active {
+  transform: scale(0.95);
 }
