@@ -22,5 +22,9 @@ export class KeypadItem {
     if (Number(this.keyValue()) || this.keyValue() === '0') {
       this.calculatorService.addDigit(this.keyValue());
     }
+
+    if(this.keyStyle == "operator") {
+      this.calculatorService.setOperator(this.keyValue());
+    }
   }
 }

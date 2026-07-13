@@ -9,7 +9,7 @@ export class CalculatorService {
   private operator = signal<string | null>(null);
 
   addDigit(keyValue: string) {
-    if(this.displayValue() === '0') {
+    if (this.displayValue() === '0') {
       this.displayValue.set(keyValue);
       return;
     }
@@ -17,6 +17,13 @@ export class CalculatorService {
     this.displayValue.set(newDisplayValue());
   }
 
+  private displayToMemory() {
+    this.memory.set(this.displayValue());
+  }
+  setOperator(keyValue: string) {
+    this.operator.set(keyValue);
+    this.displayToMemory();
+  }
   getDisplayValue() {
     return this.displayValue;
   }
