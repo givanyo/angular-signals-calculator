@@ -34,19 +34,24 @@ export class KeypadItem {
 
     if (this.keyValue() === '⌫') {
       this.calculatorService.backspace();
+      return;
     }
 
     if (this.keyValue() === 'C') {
       this.calculatorService.clearAll();
+      return;
     }
 
     if (this.keyValue() === 'CE') {
       this.calculatorService.clearEntry();
+      return;
     }
 
     if(this.keyValue() === ',') {
       this.calculatorService.handleDecimal();
-      console.log('handle decimal')
+      return;
     }
+
+    this.calculatorService.handleAltOperator(this.keyValue());
   }
 }

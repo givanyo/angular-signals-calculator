@@ -68,7 +68,7 @@ export class CalculatorService {
     if (this.displayValue() === 'Erro') {
       return;
     }
-    if(this.operator() && this.displayValue() !== this.memory()) {
+    if (this.operator() && this.displayValue() !== this.memory()) {
       this.handleEqual();
     }
     this.operator.set(keyValue);
@@ -77,7 +77,11 @@ export class CalculatorService {
   }
 
   backspace() {
-    if (this.displayIsNull || this.displayValue().length === 1) {
+    const cancelCondition =
+      this.displayIsNull ||
+      this.displayValue().length === 1 ||
+      (this.displayValue().length === 2 && this.displayValue().at(0) === '-');
+    if (cancelCondition) {
       this.displayValue.set('0');
       return;
     }
@@ -113,7 +117,52 @@ export class CalculatorService {
       return;
     }
     const newDisplayValue = computed(() => this.displayValue() + ',');
+    this.waitingNext.set(false);
     this.displayValue.set(newDisplayValue());
+  }
+
+  handleAltOperator(keyValue: string) {
+    if (this.displayValue() === 'Erro') {
+      return;
+    }
+
+    let result = 'Erro';
+
+    const memory = Number(this.memory()?.replace(',', '.'));
+    const displayNumber = Number(this.displayValue()?.replace(',', '.'));
+
+    switch (keyValue) {
+      case '%':
+        if (memory === 0) {
+          result = String((memory * displayNumber) / 100);
+          break;
+        }
+        result = String((memory || 1) * (displayNumber / 100));
+        break;
+
+      case '1/x':
+        if (displayNumber === 0) {
+          break;
+        }
+        result = String(1 / displayNumber);
+        break;
+
+      case 'x²':
+        result = String(displayNumber ** 2);
+        break;
+
+      case '√x':
+        if (displayNumber < 0) {
+          break;
+        }
+        result = String(displayNumber ** (1 / 2));
+        break;
+
+      case '±':
+        result = String(displayNumber * -1);
+    }
+
+    this.displayValue.set(result.replace('.', ','));
   }
 
   getDisplayValue() {
