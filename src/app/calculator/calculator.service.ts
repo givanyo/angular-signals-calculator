@@ -113,6 +113,7 @@ export class CalculatorService {
       return;
     }
     const newDisplayValue = computed(() => this.displayValue() + ',');
+    this.waitingNext.set(false);
     this.displayValue.set(newDisplayValue());
   }
 

@@ -46,7 +46,6 @@ export class KeypadItem {
 
     if(this.keyValue() === ',') {
       this.calculatorService.handleDecimal();
-      console.log('handle decimal')
     }
   }
 }
