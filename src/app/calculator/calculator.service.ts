@@ -17,10 +17,10 @@ export class CalculatorService {
   constructor() {
     const invalidValues = ['Infinity', '-Infinity', 'NaN'];
     effect(() => {
-      if(invalidValues.includes(this.displayValue())) {
+      if (invalidValues.includes(this.displayValue())) {
         this.displayValue.set('Erro');
       }
-    })
+    });
   }
   private calculate(displayNumber: number, operator: string, memory: number) {
     let result = 'Erro';
@@ -169,10 +169,16 @@ export class CalculatorService {
   }
 
   getDisplayValue() {
+    if (this.displayValue().length > 16) {
+      return signal(this.displayValue().slice(0, 16) + '...');
+    }
     return this.displayValue;
   }
 
   getMemory() {
+    if (this.memory()) {
+      return signal(this.memory()!.slice(0, 16) + '...');
+    }
     return this.memory;
   }
 

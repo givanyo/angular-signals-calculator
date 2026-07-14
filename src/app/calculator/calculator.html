@@ -1,7 +1,10 @@
 <div class="calculator">
-  <app-display [displayValue]="displayValue()" [memory]="memory()" [operator]="operator()"/>
+  <app-display [displayValue]="displayValue()" [memory]="memory()" [operator]="operator()" />
   <p>Use o mouse/toque ou o teclado: 0-9, +, -, *, /, Enter, Backspace, C</p>
   <div class="keypad">
     <ng-content />
   </div>
 </div>
+@if (!isMobile()) {
+  <app-keyboard-input />
+}

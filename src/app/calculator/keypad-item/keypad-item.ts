@@ -1,6 +1,6 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { KeypadItemService } from './keypad-item.service';
-import { CalculatorService } from '../calculator.service';
+import { KeyPressService } from '../key-press.service';
 
 @Component({
   selector: 'app-keypad-item',
@@ -10,7 +10,7 @@ import { CalculatorService } from '../calculator.service';
 })
 export class KeypadItem {
   keypadItemService = inject(KeypadItemService);
-  calculatorService = inject(CalculatorService);
+  keyPressService = inject(KeyPressService);
 
   keyValue = input.required<string>();
 
@@ -19,39 +19,6 @@ export class KeypadItem {
   }
 
   onKeyPress() {
-    if (Number(this.keyValue()) || this.keyValue() === '0') {
-      this.calculatorService.addDigit(this.keyValue());
-      return;
-    }
-    if (this.keyValue() === '=') {
-      this.calculatorService.handleEqual();
-      return;
-    }
-    if (this.keyStyle === 'operator') {
-      this.calculatorService.setOperator(this.keyValue());
-      return;
-    }
-
-    if (this.keyValue() === '⌫') {
-      this.calculatorService.backspace();
-      return;
-    }
-
-    if (this.keyValue() === 'C') {
-      this.calculatorService.clearAll();
-      return;
-    }
-
-    if (this.keyValue() === 'CE') {
-      this.calculatorService.clearEntry();
-      return;
-    }
-
-    if(this.keyValue() === ',') {
-      this.calculatorService.handleDecimal();
-      return;
-    }
-
-    this.calculatorService.handleAltOperator(this.keyValue());
+    this.keyPressService.handleKeyPress(this.keyValue());
   }
 }
