@@ -1,8 +1,4 @@
-import { Injectable, signal, computed } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
-import localePt from '@angular/common/locales/pt';
-import { formatNumber } from '@angular/common';
-registerLocaleData(localePt);
+import { Injectable, signal, computed, effect } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
@@ -18,7 +14,14 @@ export class CalculatorService {
     }
     this.memory.set(this.displayValue());
   }
-
+  constructor() {
+    const invalidValues = ['Infinity', '-Infinity', 'NaN'];
+    effect(() => {
+      if(invalidValues.includes(this.displayValue())) {
+        this.displayValue.set('Erro');
+      }
+    })
+  }
   private calculate(displayNumber: number, operator: string, memory: number) {
     let result = 'Erro';
 
