@@ -169,6 +169,9 @@ export class CalculatorService {
   }
 
   getDisplayValue() {
+    if(this.displayValue().length > 16) {
+      return signal(this.displayValue().slice(0, 16) + '...');
+    }
     return this.displayValue;
   }
 
