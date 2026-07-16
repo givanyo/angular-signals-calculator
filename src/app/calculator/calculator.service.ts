@@ -176,7 +176,7 @@ export class CalculatorService {
   }
 
   getMemory() {
-    if (this.memory()) {
+    if (this.memory() && this.memory()!.length > 16) {
       return signal(this.memory()!.slice(0, 16) + '...');
     }
     return this.memory;
