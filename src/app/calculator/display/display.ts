@@ -1,5 +1,5 @@
-import { DecimalPipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CalculatorService } from '../calculator.service';
 
 
 @Component({
@@ -9,7 +9,16 @@ import { Component, input } from '@angular/core';
   styleUrl: './display.css',
 })
 export class Display {
-  displayValue = input.required<string>();
-  memory = input<string | null>();
-  operator = input<string | null>();
+  calculatorService = inject(CalculatorService);
+  get displayValue() {
+    return this.calculatorService.getDisplayValue();
+  }
+
+  get memory() {
+    return this.calculatorService.getMemory();
+  }
+  
+  get operator() {
+    return this.calculatorService.getOperator();
+  }
 }
