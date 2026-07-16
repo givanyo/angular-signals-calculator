@@ -163,8 +163,9 @@ export class CalculatorService {
 
       case '±':
         result = String(displayNumber * -1);
+        
     }
-
+    this.waitingNext.set(false);
     this.displayValue.set(result.replace('.', ','));
   }
 
